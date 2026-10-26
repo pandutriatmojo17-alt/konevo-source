@@ -64,7 +64,7 @@ $("talkMode").addEventListener("change",async()=>{
  if(activeRoom&&talkMode==="open")await startTalking();
 });
 function waitIce(peer,timeout=8000){if(peer.iceGatheringState==="complete")return Promise.resolve();return new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;clearTimeout(timer);peer.removeEventListener("icegatheringstatechange",check);resolve();};const check=()=>{if(peer.iceGatheringState==="complete")finish();};const timer=setTimeout(finish,timeout);peer.addEventListener("icegatheringstatechange",check);});}
-function waitConnected(peer,timeout=12000){if(peer.connectionState==="connected")return Promise.resolve();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error("Koneksi WebRTC belum tersambung. Periksa jaringan/STUN-TURN."));},timeout);const check=()=>{if(peer.connectionState==="connected"){cleanup();resolve();}else if(peer.connectionState==="failed"||peer.connectionState==="closed"){cleanup();reject(new Error("Koneksi WebRTC "+peer.connectionState));}};const cleanup=()=>{clearTimeout(timer);peer.removeEventListener("connectionstatechange",check);};peer.addEventListener("connectionstatechange",check);check();});}
+function waitConnected(peer,timeout=12000){if(peer.connectionState==="connected")return Promise.resolve();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error("Koneksi WebRTC belum tersambung (status: "+peer.connectionState+", ICE: "+peer.iceConnectionState+"). Periksa jaringan atau konfigurasi STUN/TURN."));},timeout);const check=()=>{if(peer.connectionState==="connected"){cleanup();resolve();}else if(peer.connectionState==="failed"||peer.connectionState==="closed"){cleanup();reject(new Error("Koneksi WebRTC "+peer.connectionState));}};const cleanup=()=>{clearTimeout(timer);peer.removeEventListener("connectionstatechange",check);};peer.addEventListener("connectionstatechange",check);check();});}
 function newPeer(){const p=new RTCPeerConnection({iceServers:[{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:stun.l.google.com:19302"}]});p.onconnectionstatechange=()=>{if(activeRoom&&p===subPc)$("radioState").textContent="Audio masuk: "+p.connectionState;};return p;}
 async function joinRoom(room){await cleanupAudio();activeRoom=room;$("appCard").classList.add("hidden");$("radioCard").classList.remove("hidden");$("roomTitle").textContent=room.name;$("radioState").textContent="Menyiapkan audio…";$("ptt").disabled=true;
 try{
@@ -76,7 +76,7 @@ try{
    await subPc.setRemoteDescription(sub.sessionDescription);
    const answer=await subPc.createAnswer();await subPc.setLocalDescription(answer);await waitIce(subPc);
    await api("/api/audio/renegotiate",{method:"PUT",body:JSON.stringify({audioSessionId:subAudioSessionId,sessionDescription:subPc.localDescription})});
-   await waitConnected(subPc).catch(e=>{message("radioMessage",e.message,"error");});
+   await waitConnected(subPc);
  } else {message("radioMessage","Kamu sudah masuk ruang. Belum ada anggota lain yang memancarkan audio. Jika anggota mulai bicara sebelum kamu bergabung ulang, keluar lalu gabung lagi.","");}
  $("ptt").disabled=false;applyTalkMode();if(!$("radioMessage").classList.contains("error"))message("radioMessage","Siap. Pilih mode bicara lalu gunakan tombol mikrofon.","success");if(talkMode==="open")await startTalking();
 }catch(e){message("radioMessage","Gagal menyiapkan ruang: "+e.message,"error");$("radioState").textContent="Gagal";$("ptt").disabled=true;}
@@ -103,8 +103,9 @@ async function startTalking(){
  finally{busy=false;$("ptt").disabled=false;}
 }
 function stopTalking(){if(micTrack)micTrack.enabled=false;talkActive=false;applyTalkMode();if(activeRoom)$("radioState").textContent=subPc?.connectionState==="connected"?"Terhubung • mikrofon mute":"Siap";}
-async function cleanupPublisher(){if(micStream)micStream.getTracks().forEach(t=>t.stop());micStream=null;micTrack=null;if(pubPc){pubPc.close();pubPc=null;}pubAudioSessionId=null;}
-async function cleanupAudio(){stopTalking();talkActive=false;await cleanupPublisher();applyTalkMode();if(subPc){subPc.close();subPc=null;}subAudioSessionId=null;$("remoteAudio").srcObject=null;}
+async function endAudioSession(id){if(!id)return;try{await api("/api/audio/end",{method:"POST",body:JSON.stringify({audioSessionId:id})});}catch(e){console.warn("Tidak dapat menandai sesi audio selesai:",e.message);}}
+async function cleanupPublisher(){const oldId=pubAudioSessionId;pubAudioSessionId=null;if(oldId)await endAudioSession(oldId);if(micStream)micStream.getTracks().forEach(t=>t.stop());micStream=null;micTrack=null;if(pubPc){pubPc.close();pubPc=null;}}
+async function cleanupAudio(){stopTalking();talkActive=false;await cleanupPublisher();applyTalkMode();const oldSubId=subAudioSessionId;subAudioSessionId=null;if(oldSubId)await endAudioSession(oldSubId);if(subPc){subPc.close();subPc=null;}$("remoteAudio").srcObject=null;}
 const ptt=$("ptt");
 ptt.addEventListener("pointerdown",e=>{if(ptt.disabled||talkMode!=="ptt")return;e.preventDefault();pressStarted=true;ptt.setPointerCapture?.(e.pointerId);startTalking();});
 ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>ptt.addEventListener(ev,()=>{if(talkMode==="ptt"&&pressStarted){pressStarted=false;stopTalking();}}));
