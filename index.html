@@ -10,7 +10,7 @@ header{padding:20px 18px 14px;display:flex;align-items:center;justify-content:sp
 .logo{font-size:23px;font-weight:850;letter-spacing:.3px}.logo span{color:#6da0ff}.status{font-size:12px;color:var(--green);display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
 main{max-width:760px;margin:auto;padding:18px 14px 40px}.card{background:var(--panel);border:1px solid #25344b;border-radius:20px;padding:18px;margin-bottom:15px;box-shadow:0 12px 30px #0002}
 h1{font-size:23px;margin:0 0 7px}h2{font-size:17px;margin:0 0 13px}.sub{color:var(--muted);font-size:13px;line-height:1.5}.row{display:flex;gap:9px;align-items:center}.row>*{min-width:0}.stack{display:grid;gap:10px}
-input,button,select{font:inherit;border-radius:12px;padding:12px 13px;border:1px solid #344660;background:#0d1727;color:var(--text);width:100%;outline:none}button{border:0;background:var(--blue);font-weight:750;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:var(--panel2);border:1px solid #344660}.danger{background:#632536}.small{font-size:12px;padding:9px 11px;width:auto}.hidden{display:none!important}.room{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#18253a;padding:13px;border-radius:13px;margin-top:9px}.room strong{display:block}.room small{color:var(--muted)}.room button{width:auto;white-space:nowrap}
+input,button{font:inherit;border-radius:12px;padding:12px 13px;border:1px solid #344660;background:#0d1727;color:var(--text);width:100%;outline:none}button{border:0;background:var(--blue);font-weight:750;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:var(--panel2);border:1px solid #344660}.small{font-size:12px;padding:9px 11px;width:auto}.hidden{display:none!important}.room{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#18253a;padding:13px;border-radius:13px;margin-top:9px}.room strong{display:block}.room small{color:var(--muted)}.room button{width:auto;white-space:nowrap}
 .ptt{display:flex;align-items:center;justify-content:center;width:168px;height:168px;border-radius:50%;margin:18px auto;background:linear-gradient(145deg,#347bff,#2250b5);box-shadow:0 0 0 12px #347bff18,0 15px 35px #0005;font-size:16px;touch-action:none;user-select:none}.ptt.live{background:linear-gradient(145deg,#ff637a,#b92e50);box-shadow:0 0 0 12px #ff637a20,0 0 32px #ff637a55}.center{text-align:center}.pill{display:inline-block;background:#20314a;border-radius:99px;padding:5px 10px;font-size:12px;color:#b9c8df}.notice{font-size:13px;line-height:1.5;color:#b9c8df;background:#17263b;padding:12px;border-radius:12px;margin-top:10px;white-space:pre-wrap}.error{color:#ff9aa8}.success{color:#8ef0c5}footer{text-align:center;color:#72839d;font-size:11px;padding:12px}
 </style></head>
 <body>
@@ -24,62 +24,69 @@ input,button,select{font:inherit;border-radius:12px;padding:12px 13px;border:1px
 <input id="email" type="email" placeholder="Email" autocomplete="email" required>
 <div id="phoneWrap" class="hidden"><input id="phone" type="tel" placeholder="Nomor HP" autocomplete="tel"></div>
 <input id="password" type="password" placeholder="Kata sandi (minimal 10 karakter saat daftar)" autocomplete="current-password" required>
-<button id="authSubmit" type="submit">Login</button>
-</form><div id="authMessage" class="notice hidden"></div>
-<p class="sub">Catatan: verifikasi email belum diaktifkan pada paket awal ini. Jangan gunakan untuk pengguna umum sebelum verifikasi email dan pengamanan produksi diselesaikan.</p>
-</section>
-
+<button id="authSubmit" type="submit">Login</button></form><div id="authMessage" class="notice hidden"></div>
+<p class="sub">Verifikasi email belum diaktifkan pada paket awal. Selesaikan pengamanan sebelum digunakan secara umum.</p></section>
 <section class="card hidden" id="appCard">
 <div class="row" style="justify-content:space-between"><div><h1 id="hello">Radio Konevo</h1><p class="sub">Pilih ruang, lalu tekan dan tahan tombol untuk bicara.</p></div><button id="logout" class="secondary small">Keluar</button></div>
-<div class="row" style="margin:14px 0"><input id="roomName" placeholder="Nama ruang baru"><button id="createRoom" style="width:auto">Buat</button></div>
-<div id="roomList"><p class="sub">Memuat ruang…</p></div>
-</section>
-
+<div class="row" style="margin:14px 0"><input id="roomName" placeholder="Nama ruang baru"><button id="createRoom" style="width:auto">Buat</button></div><div id="roomList"><p class="sub">Memuat ruang…</p></div></section>
 <section class="card hidden" id="radioCard">
 <div class="row" style="justify-content:space-between"><div><h2 id="roomTitle">Ruang Radio</h2><span class="pill" id="radioState">Belum tersambung</span></div><button id="leaveRoom" class="secondary small">Keluar ruang</button></div>
 <div class="center"><button id="ptt" class="ptt" disabled>TAHAN UNTUK<br>BICARA</button><p class="sub" id="pttHint">Pilih ruang untuk memulai.</p></div>
-<audio id="remoteAudio" autoplay playsinline></audio>
-<div id="radioMessage" class="notice">Audio memerlukan izin mikrofon. Di HP, gunakan HTTPS dan izinkan akses mikrofon saat diminta.</div>
-</section>
-<footer>Konevo • versi awal koneksi audio</footer>
-</main>
+<audio id="remoteAudio" autoplay playsinline></audio><div id="radioMessage" class="notice">Audio memerlukan izin mikrofon. Izinkan akses mikrofon saat diminta.</div></section>
+<footer>Konevo • versi awal koneksi audio</footer></main>
 <script>
-const API = "https://konevo-api.pandutriatmojo17.workers.dev";
-const $ = id => document.getElementById(id);
-let token = localStorage.getItem("konevo_token") || "";
-let mode = "login", activeRoom = null, audioSessionId = null, pc = null, micStream = null, currentTrack = null, busy = false, pressStarted = false;
-function message(id, text, kind=""){ const el=$(id);el.textContent=text;el.classList.remove("hidden","error","success");if(kind)el.classList.add(kind); }
-async function api(path, options={}) {
- const headers={"Content-Type":"application/json",...(token?{"Authorization":"Bearer "+token}:{}),...(options.headers||{})};
- const res=await fetch(API+path,{...options,headers});
- const data=await res.json().catch(()=>({error:"Respons server tidak valid"}));
- if(!res.ok) throw new Error(data.error||("HTTP "+res.status));
- return data;
-}
+const API="https://konevo-api.pandutriatmojo17.workers.dev";
+const $=id=>document.getElementById(id);
+let token=localStorage.getItem("konevo_token")||"",mode="login",activeRoom=null;
+let subPc=null,pubPc=null,pubAudioSessionId=null,micStream=null,micTrack=null,busy=false,pressStarted=false,subAudioSessionId=null;
+function message(id,text,kind=""){const el=$(id);el.textContent=text;el.classList.remove("hidden","error","success");if(kind)el.classList.add(kind);}
+async function api(path,options={}){const headers={"Content-Type":"application/json",...(token?{"Authorization":"Bearer "+token}:{}),...(options.headers||{})};const res=await fetch(API+path,{...options,headers});const data=await res.json().catch(()=>({error:"Respons server tidak valid"}));if(!res.ok)throw new Error(data.error||("HTTP "+res.status));return data;}
 async function health(){try{const d=await api("/api/health",{headers:{}});$("apiStatus").textContent=d.status==="online"?"API online":"API bermasalah";}catch{$("apiStatus").textContent="API tidak terjangkau";}}
 function setMode(next){mode=next;const reg=mode==="register";$("nameWrap").classList.toggle("hidden",!reg);$("phoneWrap").classList.toggle("hidden",!reg);$("displayName").required=reg;$("phone").required=reg;$("authSubmit").textContent=reg?"Buat akun":"Login";$("loginTab").className=reg?"secondary":"";$("registerTab").className=reg?"":"secondary";$("authMessage").classList.add("hidden");}
 $("loginTab").onclick=()=>setMode("login");$("registerTab").onclick=()=>setMode("register");
-$("authForm").onsubmit=async e=>{e.preventDefault();$("authSubmit").disabled=true;try{
- if(mode==="register"){const d=await api("/api/register",{method:"POST",body:JSON.stringify({displayName:$("displayName").value,phone:$("phone").value,email:$("email").value,password:$("password").value})});message("authMessage",d.message||"Akun dibuat. Silakan login.","success");setMode("login");}
- else {const d=await api("/api/login",{method:"POST",body:JSON.stringify({email:$("email").value,password:$("password").value})});token=d.token;localStorage.setItem("konevo_token",token);await showApp(d.user);}
- }catch(err){message("authMessage",err.message,"error");}finally{$("authSubmit").disabled=false;}};
+$("authForm").onsubmit=async e=>{e.preventDefault();$("authSubmit").disabled=true;try{if(mode==="register"){const d=await api("/api/register",{method:"POST",body:JSON.stringify({displayName:$("displayName").value,phone:$("phone").value,email:$("email").value,password:$("password").value})});message("authMessage",d.message||"Akun dibuat. Silakan login.","success");setMode("login");}else{const d=await api("/api/login",{method:"POST",body:JSON.stringify({email:$("email").value,password:$("password").value})});token=d.token;localStorage.setItem("konevo_token",token);await showApp(d.user);}}catch(err){message("authMessage",err.message,"error");}finally{$("authSubmit").disabled=false;}};
 async function showApp(user){$("authCard").classList.add("hidden");$("appCard").classList.remove("hidden");$("hello").textContent="Halo, "+(user.displayName||user.display_name||"Kawan");await loadRooms();}
-async function loadRooms(){try{const d=await api("/api/rooms");const list=$("roomList");list.innerHTML="";if(!d.rooms.length){list.innerHTML='<p class="sub">Belum ada ruang. Buat ruang pertamamu.</p>';return;}for(const r of d.rooms){const item=document.createElement("div");item.className="room";const info=document.createElement("div");const title=document.createElement("strong");title.textContent=r.name;const sub=document.createElement("small");sub.textContent="Ruang utama • "+r.room_type;info.append(title,sub);const btn=document.createElement("button");btn.textContent="Gabung";btn.onclick=()=>joinRoom(r);item.append(info,btn);list.append(item);}}catch(e){$("roomList").textContent=e.message;}}
+async function loadRooms(){try{const d=await api("/api/rooms");const list=$("roomList");list.innerHTML="";if(!d.rooms.length){list.innerHTML='<p class="sub">Belum ada ruang. Buat ruang pertamamu.</p>';return;}for(const r of d.rooms){const item=document.createElement("div");item.className="room";const info=document.createElement("div"),title=document.createElement("strong"),sub=document.createElement("small");title.textContent=r.name;sub.textContent="Ruang utama • "+r.room_type;info.append(title,sub);const btn=document.createElement("button");btn.textContent="Gabung";btn.onclick=()=>joinRoom(r);item.append(info,btn);list.append(item);}}catch(e){$("roomList").textContent=e.message;}}
 $("createRoom").onclick=async()=>{const name=$("roomName").value.trim();if(!name)return;try{await api("/api/rooms",{method:"POST",body:JSON.stringify({name})});$("roomName").value="";await loadRooms();}catch(e){alert(e.message)}};
-async function waitIce(peer){if(peer.iceGatheringState==="complete")return;await new Promise(resolve=>{const timer=setTimeout(resolve,7000);peer.addEventListener("icegatheringstatechange",()=>{if(peer.iceGatheringState==="complete"){clearTimeout(timer);resolve();}});});}
-async function joinRoom(room){try{activeRoom=room;$("appCard").classList.add("hidden");$("radioCard").classList.remove("hidden");$("roomTitle").textContent=room.name;$("radioState").textContent="Menyiapkan audio…";$("ptt").disabled=true;
- const s=await api("/api/audio/session",{method:"POST",body:JSON.stringify({roomId:room.id})});audioSessionId=s.audioSessionId;pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:stun.l.google.com:19302"}]});
- pc.onconnectionstatechange=()=>{$("radioState").textContent=pc.connectionState;};
- pc.ontrack=e=>{const stream=e.streams?.[0]||new MediaStream([e.track]);$("remoteAudio").srcObject=stream;$("remoteAudio").play().catch(()=>message("radioMessage","Ketuk layar sekali agar audio bisa diputar."));};
+function waitIce(peer,timeout=8000){if(peer.iceGatheringState==="complete")return Promise.resolve();return new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;clearTimeout(timer);peer.removeEventListener("icegatheringstatechange",check);resolve();};const check=()=>{if(peer.iceGatheringState==="complete")finish();};const timer=setTimeout(finish,timeout);peer.addEventListener("icegatheringstatechange",check);});}
+function waitConnected(peer,timeout=12000){if(peer.connectionState==="connected")return Promise.resolve();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error("Koneksi WebRTC belum tersambung. Periksa jaringan/STUN-TURN."));},timeout);const check=()=>{if(peer.connectionState==="connected"){cleanup();resolve();}else if(peer.connectionState==="failed"||peer.connectionState==="closed"){cleanup();reject(new Error("Koneksi WebRTC "+peer.connectionState));}};const cleanup=()=>{clearTimeout(timer);peer.removeEventListener("connectionstatechange",check);};peer.addEventListener("connectionstatechange",check);check();});}
+function newPeer(){const p=new RTCPeerConnection({iceServers:[{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:stun.l.google.com:19302"}]});p.onconnectionstatechange=()=>{if(activeRoom&&p===subPc)$("radioState").textContent="Audio masuk: "+p.connectionState;};return p;}
+async function joinRoom(room){await cleanupAudio();activeRoom=room;$("appCard").classList.add("hidden");$("radioCard").classList.remove("hidden");$("roomTitle").textContent=room.name;$("radioState").textContent="Menyiapkan audio…";$("ptt").disabled=true;
+try{
  const sub=await api("/api/audio/subscribe",{method:"POST",body:JSON.stringify({roomId:room.id})});
- if(sub.tracks?.length){for(const t of sub.tracks)pc.addTransceiver("audio",{direction:"recvonly"});const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitIce(pc);const resp=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId:sub.audioSessionId,sessionDescription:pc.localDescription,tracks:pc.getTransceivers().map((tr,i)=>({location:"remote",mid:tr.mid,sessionId:sub.tracks[i]?.sessionId,trackName:sub.tracks[i]?.trackName})).filter(x=>x.sessionId)})});if(resp.sessionDescription)await pc.setRemoteDescription(resp.sessionDescription);audioSessionId=s.audioSessionId;}
- $("ptt").disabled=false;$("pttHint").textContent="Tekan dan tahan untuk bicara. Lepaskan untuk berhenti.";message("radioMessage","Terhubung ke ruang. Jika belum ada anggota yang bicara, suara yang diterima akan hening.","success");
- }catch(e){message("radioMessage","Gagal menyambungkan audio: "+e.message,"error");$("radioState").textContent="Gagal";}}
-async function startTalking(){if(busy||!activeRoom||!pc)return;busy=true;try{micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});const track=micStream.getAudioTracks()[0];currentTrack=pc.addTrack(track,micStream);const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitIce(pc);const result=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId,sessionDescription:pc.localDescription,tracks:pc.getTransceivers().filter(t=>t.sender.track===track).map(t=>({location:"local",mid:t.mid,trackName:"konevo-audio"}))})});if(result.sessionDescription)await pc.setRemoteDescription(result.sessionDescription);$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";}catch(e){if(micStream)micStream.getTracks().forEach(t=>t.stop());message("radioMessage","Mikrofon gagal aktif: "+e.message,"error");}finally{busy=false;}}
-function stopTalking(){if(micStream)micStream.getTracks().forEach(t=>t.stop());if(pc&&currentTrack){const sender=pc.getSenders().find(s=>s.track===currentTrack);if(sender)pc.removeTrack(sender);currentTrack=null;}micStream=null;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";if(pc&&pc.connectionState==="connected")$("radioState").textContent="Terhubung";}
+ if(sub.tracks?.length){
+   if(!sub.sessionDescription||sub.sessionDescription.type!=="offer")throw new Error("SFU tidak mengembalikan offer subscribe.");
+   subAudioSessionId=sub.audioSessionId;subPc=newPeer();
+   subPc.ontrack=e=>{const stream=e.streams?.[0]||new MediaStream([e.track]);$("remoteAudio").srcObject=stream;$("remoteAudio").play().catch(()=>message("radioMessage","Ketuk layar untuk mengaktifkan pemutaran audio."));};
+   await subPc.setRemoteDescription(sub.sessionDescription);
+   const answer=await subPc.createAnswer();await subPc.setLocalDescription(answer);await waitIce(subPc);
+   await api("/api/audio/renegotiate",{method:"PUT",body:JSON.stringify({audioSessionId:subAudioSessionId,sessionDescription:subPc.localDescription})});
+   await waitConnected(subPc).catch(e=>{message("radioMessage",e.message,"error");});
+ } else {message("radioMessage","Kamu sudah masuk ruang. Belum ada anggota lain yang memancarkan audio. Jika anggota mulai bicara sebelum kamu bergabung ulang, keluar lalu gabung lagi.","");}
+ $("ptt").disabled=false;$("pttHint").textContent="Tekan dan tahan untuk bicara. Lepaskan untuk mute.";if(!$("radioMessage").classList.contains("error"))message("radioMessage","Siap. Tekan dan tahan tombol biru untuk bicara.","success");
+}catch(e){message("radioMessage","Gagal menyiapkan ruang: "+e.message,"error");$("radioState").textContent="Gagal";$("ptt").disabled=true;}
+}
+async function startTalking(){if(busy||!activeRoom)return;busy=true;$("ptt").disabled=true;try{
+ if(pubPc&&pubPc.connectionState==="connected"&&micTrack){micTrack.enabled=true;$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";return;}
+ await cleanupPublisher();
+ micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+ micTrack=micStream.getAudioTracks()[0];
+ const s=await api("/api/audio/session",{method:"POST",body:JSON.stringify({roomId:activeRoom.id})});pubAudioSessionId=s.audioSessionId;
+ pubPc=newPeer();pubPc.addTrack(micTrack,micStream);
+ const offer=await pubPc.createOffer();await pubPc.setLocalDescription(offer);await waitIce(pubPc);
+ const trans=pubPc.getTransceivers().find(t=>t.sender.track===micTrack);
+ const result=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId:pubAudioSessionId,sessionDescription:pubPc.localDescription,tracks:[{location:"local",mid:trans.mid,trackName:"konevo-audio"}]})});
+ if(!result.sessionDescription)throw new Error("SFU tidak mengembalikan jawaban SDP untuk mikrofon.");
+ await pubPc.setRemoteDescription(result.sessionDescription);
+ await waitConnected(pubPc);
+ if(!pressStarted){micTrack.enabled=false;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";$("radioState").textContent="Terhubung • mikrofon mute";message("radioMessage","Koneksi siap. Tekan dan tahan untuk mulai bicara.","success");}
+ else{$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";message("radioMessage","Mikrofon aktif. Lepaskan tombol untuk mute.","success");}
+ }catch(e){await cleanupPublisher();message("radioMessage","Mikrofon gagal aktif: "+e.message,"error");$("radioState").textContent="Gagal";}finally{busy=false;$("ptt").disabled=false;}}
+function stopTalking(){if(micTrack)micTrack.enabled=false;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";if(activeRoom)$("radioState").textContent=subPc?.connectionState==="connected"?"Terhubung • mikrofon mute":"Siap";}
+async function cleanupPublisher(){if(micStream)micStream.getTracks().forEach(t=>t.stop());micStream=null;micTrack=null;if(pubPc){pubPc.close();pubPc=null;}pubAudioSessionId=null;}
+async function cleanupAudio(){stopTalking();await cleanupPublisher();if(subPc){subPc.close();subPc=null;}subAudioSessionId=null;$("remoteAudio").srcObject=null;}
 const ptt=$("ptt");ptt.addEventListener("pointerdown",e=>{if(ptt.disabled)return;e.preventDefault();pressStarted=true;ptt.setPointerCapture?.(e.pointerId);startTalking();});["pointerup","pointercancel","lostpointercapture"].forEach(ev=>ptt.addEventListener(ev,()=>{if(pressStarted){pressStarted=false;stopTalking();}}));
-async function leaveRoom(){stopTalking();if(pc){pc.close();pc=null;}if(micStream)micStream.getTracks().forEach(t=>t.stop());audioSessionId=null;activeRoom=null;$("remoteAudio").srcObject=null;$("radioCard").classList.add("hidden");$("appCard").classList.remove("hidden");await loadRooms();}
-$("leaveRoom").onclick=leaveRoom;
-$("logout").onclick=async()=>{await leaveRoom().catch(()=>{});token="";localStorage.removeItem("konevo_token");$("appCard").classList.add("hidden");$("authCard").classList.remove("hidden");};
+async function leaveRoom(){await cleanupAudio();activeRoom=null;$("radioCard").classList.add("hidden");$("appCard").classList.remove("hidden");await loadRooms();}
+$("leaveRoom").onclick=leaveRoom;$("logout").onclick=async()=>{await leaveRoom().catch(()=>{});token="";localStorage.removeItem("konevo_token");$("appCard").classList.add("hidden");$("authCard").classList.remove("hidden");};
 (async()=>{await health();if(token){try{const d=await api("/api/me");await showApp({displayName:d.user.display_name});}catch{token="";localStorage.removeItem("konevo_token");}}})();
 </script></body></html>
