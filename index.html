@@ -1,162 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080d20">
-<title>Konevo — Connect Your World</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827"><title>Konevo — Radio & Chat</title>
 <style>
-:root{--bg:#080d20;--panel:#101832;--panel2:#151f40;--line:#26345b;--text:#f4f7ff;--muted:#9ba9ce;--blue:#55b7ff;--purple:#a875ff;--green:#55e0b0;--danger:#ff6f91}
-*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#17275a 0,transparent 42%),radial-gradient(ellipse at 95% 20%,#29174d 0,transparent 35%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer;color:inherit;border:0}.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:92px}.top{padding:20px 18px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(145deg,#4cc8ff,#8068ff 65%,#c27bff);display:grid;place-items:center;color:white;font-size:23px;font-weight:900;box-shadow:0 0 25px #6e7dff55}.brandname{font-size:22px;font-weight:850;letter-spacing:.5px}.tag{font-size:10px;color:var(--muted);letter-spacing:1.5px}.topactions{display:flex;gap:8px}.circle{width:40px;height:40px;border-radius:14px;background:#182344;border:1px solid var(--line);display:grid;place-items:center;font-size:18px}.page{display:none;padding:0 16px 18px;animation:fade .18s ease}.page.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}.greeting{padding:9px 2px 18px}.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--blue);font-weight:800}.h1{font-size:27px;line-height:1.15;margin:7px 0 7px;letter-spacing:-.7px}.sub{color:var(--muted);font-size:13px;line-height:1.5}.hero{padding:19px;border:1px solid #40548d;border-radius:25px;background:linear-gradient(135deg,#1a3670,#24235c 60%,#321d5a);box-shadow:0 14px 35px #02061755;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-65px;top:-65px;border:1px solid #ffffff18;box-shadow:0 0 0 22px #ffffff08,0 0 0 48px #ffffff05}.herohead{display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;z-index:1}.pill{font-size:10px;padding:6px 9px;border-radius:999px;background:#55e0b020;color:var(--green);border:1px solid #55e0b044;font-weight:800;letter-spacing:.5px}.hero h2{font-size:22px;line-height:1.15;margin:18px 0 8px;position:relative;z-index:1}.hero p{font-size:12px;color:#d3ddff;line-height:1.5;max-width:260px;position:relative;z-index:1}.primary{background:linear-gradient(100deg,#48bdff,#8b75ff);color:#071126;font-weight:850;border-radius:14px;padding:12px 16px;box-shadow:0 8px 22px #4e7cff2a}.hero .primary{position:relative;z-index:1;margin-top:8px}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:23px 2px 12px}.sectionhead h3{font-size:15px;margin:0}.smalllink{background:none;color:var(--blue);font-size:12px;padding:5px}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.tile{background:linear-gradient(150deg,#131e3c,#0e162d);border:1px solid var(--line);border-radius:19px;padding:15px;text-align:left;min-height:128px}.tileicon{width:39px;height:39px;border-radius:13px;background:#4e8fff20;display:grid;place-items:center;font-size:20px;margin-bottom:12px}.tile strong{display:block;font-size:14px}.tile span{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.35}.channel{display:flex;align-items:center;gap:12px;padding:13px;border-radius:17px;background:#111a34;border:1px solid var(--line);margin-bottom:9px;text-align:left;width:100%}.chicon{width:47px;height:47px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#2857a5,#6945ad);font-size:22px;flex-shrink:0}.chmeta{min-width:0;flex:1}.chmeta strong{display:block;font-size:14px}.chmeta span{font-size:11px;color:var(--muted);display:block;margin-top:4px}.online{color:var(--green)!important}.count{font-size:11px;color:var(--muted);white-space:nowrap}.search{width:100%;padding:13px 14px;border-radius:14px;background:#101832;border:1px solid var(--line);color:var(--text);outline:none;margin:7px 0 15px}.search:focus{border-color:var(--blue)}.roomhead{padding:15px;border-radius:20px;background:linear-gradient(135deg,#152c5b,#281c51);border:1px solid #35477d;display:flex;gap:12px;align-items:center}.roomhead .chicon{width:53px;height:53px}.roomhead h2{margin:0 0 5px;font-size:18px}.roomhead p{margin:0;color:var(--muted);font-size:12px}.speakerbox{margin:14px 0;padding:17px 12px;border-radius:20px;background:#0d152b;border:1px solid var(--line);text-align:center}.wave{height:48px;display:flex;justify-content:center;align-items:center;gap:4px;margin:4px auto 9px}.wave i{display:block;width:4px;height:9px;border-radius:8px;background:linear-gradient(#54c8ff,#a375ff);opacity:.65}.wave.talking i{animation:pulse .55s ease-in-out infinite alternate}.wave.talking i:nth-child(3n){animation-delay:.15s}.wave.talking i:nth-child(2n){animation-delay:.3s}@keyframes pulse{to{height:39px;opacity:1}}.speakername{font-weight:800;font-size:14px}.speakerstatus{font-size:11px;color:var(--muted);margin-top:5px}.ptt{width:148px;height:148px;border-radius:50%;margin:15px auto 12px;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#6bd4ff,#7267ff 65%,#4a3a9b);box-shadow:0 0 0 9px #596cff16,0 0 0 18px #596cff0b,0 0 36px #6476ff40;touch-action:none;user-select:none;-webkit-user-select:none;font-size:38px;transition:transform .12s,filter .12s}.ptt:active,.ptt.talking{transform:scale(.96);filter:brightness(1.2);box-shadow:0 0 0 10px #55e0b026,0 0 0 22px #55e0b010,0 0 40px #55e0b055}.pttlabel{text-align:center;font-size:12px;color:var(--muted)}.roomactions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:15px 0}.secondary{border:1px solid var(--line);background:#121c37;border-radius:13px;padding:12px;font-size:12px;font-weight:750}.notice{font-size:11px;color:#aab7d8;line-height:1.5;padding:11px 12px;border-radius:13px;background:#131c35;border:1px solid #253354;margin-top:13px}.chatrow{display:flex;gap:11px;align-items:center;padding:13px 3px;border-bottom:1px solid #1c2948;text-align:left;width:100%;background:transparent}.avatar{width:47px;height:47px;flex-shrink:0;border-radius:17px;display:grid;place-items:center;background:linear-gradient(145deg,#2862a7,#7a4eae);font-weight:850}.chattext{flex:1;min-width:0}.chattext strong{font-size:13px;display:block}.chattext span{font-size:11px;color:var(--muted);display:block;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{font-size:10px;color:var(--muted);align-self:flex-start}.badgecount{background:#56bfff;color:#071126;border-radius:20px;font-size:10px;font-weight:900;padding:3px 6px;margin-top:7px;display:inline-block}.friendrow{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid #1c2948}.friendrow .chattext{flex:1}.profilehero{text-align:center;padding:23px 16px;border-radius:22px;background:linear-gradient(145deg,#172b57,#291d50);border:1px solid #35477d}.profileavatar{width:86px;height:86px;margin:0 auto 12px;border-radius:29px;background:linear-gradient(145deg,#55c5ff,#8e6bff);display:grid;place-items:center;font-size:36px;border:3px solid #ffffff30;box-shadow:0 0 25px #7a75ff44}.profilehero h2{margin:0 0 5px;font-size:20px}.profilehero p{margin:0;color:var(--muted);font-size:12px}.levelbar{height:7px;border-radius:9px;background:#0a1228;margin:15px 0 7px;overflow:hidden}.levelbar span{display:block;height:100%;width:38%;background:linear-gradient(90deg,#55c5ff,#b06cff);border-radius:9px}.profileitem{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid #1c2948}.profileitem .tileicon{margin:0;width:38px;height:38px}.profileitem strong{font-size:13px;display:block}.profileitem span{font-size:11px;color:var(--muted);display:block;margin-top:4px}.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);padding:10px 9px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);background:#090f22ed;border-top:1px solid #273354;backdrop-filter:blur(18px);z-index:5}.navbtn{background:transparent;color:#8796bd;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 1px;font-size:10px}.navbtn .navico{font-size:20px}.navbtn.active{color:#71caff}.navbtn.active .navico{filter:drop-shadow(0 0 7px #56baff)}.toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#e8f4ff;color:#08132b;padding:11px 15px;border-radius:13px;font-size:12px;font-weight:750;box-shadow:0 8px 25px #0005;transition:.2s;z-index:10;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.foot{text-align:center;font-size:10px;color:#6f7fa8;padding:22px 0 8px}.empty{padding:24px;text-align:center;color:var(--muted);font-size:13px}.modalback{display:none;position:fixed;inset:0;background:#030817c9;z-index:20;align-items:flex-end;justify-content:center;padding:15px}.modalback.show{display:flex}.modal{width:min(490px,100%);padding:20px;border-radius:23px 23px 17px 17px;background:#111b36;border:1px solid #35436b;box-shadow:0 20px 70px #0008}.modal h3{margin:0 0 8px}.modal p{font-size:12px;line-height:1.55;color:var(--muted)}.modal .search{margin-bottom:10px}.modalbuttons{display:flex;gap:9px}.modalbuttons button{flex:1}
-@media(min-width:520px){.app{border-left:1px solid #172342;border-right:1px solid #172342}.bottomnav{border-left:1px solid #273354;border-right:1px solid #273354}}
-</style>
-</head>
+:root{--bg:#0b1220;--panel:#121c2d;--panel2:#1b2940;--text:#f5f7fb;--muted:#9eacc2;--blue:#4f8cff;--green:#25c98a;--red:#ff657a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#0b1220,#101d31);font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);min-height:100vh}
+header{padding:20px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #26344a;position:sticky;top:0;background:#0b1220ed;backdrop-filter:blur(14px);z-index:3}
+.logo{font-size:23px;font-weight:850;letter-spacing:.3px}.logo span{color:#6da0ff}.status{font-size:12px;color:var(--green);display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+main{max-width:760px;margin:auto;padding:18px 14px 40px}.card{background:var(--panel);border:1px solid #25344b;border-radius:20px;padding:18px;margin-bottom:15px;box-shadow:0 12px 30px #0002}
+h1{font-size:23px;margin:0 0 7px}h2{font-size:17px;margin:0 0 13px}.sub{color:var(--muted);font-size:13px;line-height:1.5}.row{display:flex;gap:9px;align-items:center}.row>*{min-width:0}.stack{display:grid;gap:10px}
+input,button,select{font:inherit;border-radius:12px;padding:12px 13px;border:1px solid #344660;background:#0d1727;color:var(--text);width:100%;outline:none}button{border:0;background:var(--blue);font-weight:750;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.secondary{background:var(--panel2);border:1px solid #344660}.danger{background:#632536}.small{font-size:12px;padding:9px 11px;width:auto}.hidden{display:none!important}.room{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#18253a;padding:13px;border-radius:13px;margin-top:9px}.room strong{display:block}.room small{color:var(--muted)}.room button{width:auto;white-space:nowrap}
+.ptt{display:flex;align-items:center;justify-content:center;width:168px;height:168px;border-radius:50%;margin:18px auto;background:linear-gradient(145deg,#347bff,#2250b5);box-shadow:0 0 0 12px #347bff18,0 15px 35px #0005;font-size:16px;touch-action:none;user-select:none}.ptt.live{background:linear-gradient(145deg,#ff637a,#b92e50);box-shadow:0 0 0 12px #ff637a20,0 0 32px #ff637a55}.center{text-align:center}.pill{display:inline-block;background:#20314a;border-radius:99px;padding:5px 10px;font-size:12px;color:#b9c8df}.notice{font-size:13px;line-height:1.5;color:#b9c8df;background:#17263b;padding:12px;border-radius:12px;margin-top:10px;white-space:pre-wrap}.error{color:#ff9aa8}.success{color:#8ef0c5}footer{text-align:center;color:#72839d;font-size:11px;padding:12px}
+</style></head>
 <body>
-<div class="app">
-<header class="top">
-  <div class="brand"><div class="logo">K</div><div><div class="brandname">konevo</div><div class="tag">CONNECT YOUR WORLD</div></div></div>
-  <div class="topactions"><button class="circle" id="soundBtn" aria-label="Suara notifikasi" title="Suara notifikasi">🔔</button><button class="circle" id="profileShortcut" aria-label="Profil">👤</button></div>
-</header>
-
+<header><div class="logo">KONE<span>VO</span></div><div class="status"><i class="dot"></i><span id="apiStatus">Menghubungkan API…</span></div></header>
 <main>
-<section class="page active" id="home">
-  <div class="greeting"><div class="eyebrow">SELAMAT DATANG</div><h1 class="h1">Halo, Sobat Konevo 👋</h1><div class="sub">Ngobrol, terhubung, dan temukan komunitasmu.</div></div>
-  <div class="hero"><div class="herohead"><span class="pill">● KONEVO RADIO</span><span style="font-size:23px">📡</span></div><h2>Satu frekuensi,<br>banyak cerita.</h2><p>Masuk ke ruang radio favoritmu dan ngobrol bareng komunitas.</p><button class="primary" data-go="radio">Jelajahi Radio&nbsp; →</button></div>
-  <div class="sectionhead"><h3>Akses cepat</h3><button class="smalllink" data-go="radio">Lihat semua</button></div>
-  <div class="tiles">
-    <button class="tile" data-go="radio"><div class="tileicon">📻</div><strong>Radio</strong><span>Push-to-talk dan ruang komunitas</span></button>
-    <button class="tile" data-go="pesan"><div class="tileicon">💬</div><strong>Pesan</strong><span>Obrolan pribadi dan grup</span></button>
-    <button class="tile" data-go="teman"><div class="tileicon">🫂</div><strong>Teman</strong><span>Temukan teman baru</span></button>
-    <button class="tile" data-go="profil"><div class="tileicon">✨</div><strong>Profil</strong><span>Atur identitas dan gaya kamu</span></button>
-  </div>
-  <div class="sectionhead"><h3>Ruang ramai</h3><button class="smalllink" data-go="radio">Buka radio</button></div>
-  <button class="channel" data-room="utama"><div class="chicon">🌐</div><div class="chmeta"><strong>Ruang Utama</strong><span>Tempat ngobrol bersama</span></div><span class="count">● Demo</span></button>
-  <button class="channel" data-room="santai"><div class="chicon">☕</div><div class="chmeta"><strong>Ngopi Santai</strong><span>Obrolan ringan setiap hari</span></div><span class="count">● Demo</span></button>
-  <div class="foot">Konevo · Created by Pandu Triat Mojo</div>
+<section class="card" id="authCard">
+<h1>Selamat datang di Konevo</h1><p class="sub">Radio suara dan ruang ngobrol dalam satu aplikasi.</p>
+<div class="row" style="margin:14px 0"><button id="loginTab">Login</button><button id="registerTab" class="secondary">Daftar</button></div>
+<form id="authForm" class="stack">
+<div id="nameWrap" class="hidden"><input id="displayName" placeholder="Nama tampilan" autocomplete="name"></div>
+<input id="email" type="email" placeholder="Email" autocomplete="email" required>
+<div id="phoneWrap" class="hidden"><input id="phone" type="tel" placeholder="Nomor HP" autocomplete="tel"></div>
+<input id="password" type="password" placeholder="Kata sandi (minimal 10 karakter saat daftar)" autocomplete="current-password" required>
+<button id="authSubmit" type="submit">Login</button>
+</form><div id="authMessage" class="notice hidden"></div>
+<p class="sub">Catatan: verifikasi email belum diaktifkan pada paket awal ini. Jangan gunakan untuk pengguna umum sebelum verifikasi email dan pengamanan produksi diselesaikan.</p>
 </section>
 
-<section class="page" id="radio">
-  <div class="greeting"><div class="eyebrow">KONEVO RADIO</div><h1 class="h1">Pilih frekuensimu 📡</h1><div class="sub">Pilih ruang, lalu tekan dan tahan tombol bicara.</div></div>
-  <input class="search" id="channelSearch" placeholder="🔎 Cari channel..." autocomplete="off">
-  <div id="channelList">
-    <button class="channel" data-room="utama"><div class="chicon">🌐</div><div class="chmeta"><strong>Ruang Utama</strong><span>Ruang publik · semua anggota</span></div><span class="count">Masuk →</span></button>
-    <button class="channel" data-room="santai"><div class="chicon">☕</div><div class="chmeta"><strong>Ngopi Santai</strong><span>Channel komunitas · demo</span></div><span class="count">Masuk →</span></button>
-    <button class="channel" data-room="game"><div class="chicon">🎮</div><div class="chmeta"><strong>Zona Gaming</strong><span>Game dan mabar · demo</span></div><span class="count">Masuk →</span></button>
-    <button class="channel" data-room="musik"><div class="chicon">🎧</div><div class="chmeta"><strong>Teman Musik</strong><span>Berbagi rekomendasi musik · demo</span></div><span class="count">Masuk →</span></button>
-  </div>
-  <div class="notice">🔒 Ruang privat tidak ditampilkan di daftar publik. Gunakan kode akses untuk bergabung.</div>
-  <button class="secondary" style="width:100%;margin-top:10px" id="privateRoomBtn">🔑 Gabung ruang privat dengan kode</button>
+<section class="card hidden" id="appCard">
+<div class="row" style="justify-content:space-between"><div><h1 id="hello">Radio Konevo</h1><p class="sub">Pilih ruang, lalu tekan dan tahan tombol untuk bicara.</p></div><button id="logout" class="secondary small">Keluar</button></div>
+<div class="row" style="margin:14px 0"><input id="roomName" placeholder="Nama ruang baru"><button id="createRoom" style="width:auto">Buat</button></div>
+<div id="roomList"><p class="sub">Memuat ruang…</p></div>
 </section>
 
-<section class="page" id="room">
-  <button class="smalllink" id="backRadio">← Kembali ke daftar radio</button>
-  <div class="roomhead"><div class="chicon" id="roomIcon">🌐</div><div><h2 id="roomName">Ruang Utama</h2><p id="roomDesc">Ruang publik · demo tampilan</p></div></div>
-  <div class="speakerbox"><div class="eyebrow">STATUS MIKROFON</div><div class="wave" id="wave" aria-hidden="true"></div><div class="speakername" id="speakerName">Belum ada yang berbicara</div><div class="speakerstatus" id="speakerStatus">Ruang demo · audio belum tersambung</div></div>
-  <button class="ptt" id="ptt" aria-label="Tekan dan tahan untuk bicara">🎙️</button>
-  <div class="pttlabel" id="pttLabel">Tekan dan tahan untuk bicara</div>
-  <div class="roomactions"><button class="secondary" id="muteBtn">🔊 Suara: aktif</button><button class="secondary" id="leaveRoom">↗ Keluar ruang</button></div>
-  <button class="secondary" style="width:100%" id="inviteBtn">🔗 Salin info ruang (demo)</button>
-  <div class="notice">ℹ️ Ini simulasi antarmuka. Tombol mikrofon menggerakkan animasi saja; suara langsung dan kontrol giliran bicara membutuhkan backend audio.</div>
+<section class="card hidden" id="radioCard">
+<div class="row" style="justify-content:space-between"><div><h2 id="roomTitle">Ruang Radio</h2><span class="pill" id="radioState">Belum tersambung</span></div><button id="leaveRoom" class="secondary small">Keluar ruang</button></div>
+<div class="center"><button id="ptt" class="ptt" disabled>TAHAN UNTUK<br>BICARA</button><p class="sub" id="pttHint">Pilih ruang untuk memulai.</p></div>
+<audio id="remoteAudio" autoplay playsinline></audio>
+<div id="radioMessage" class="notice">Audio memerlukan izin mikrofon. Di HP, gunakan HTTPS dan izinkan akses mikrofon saat diminta.</div>
 </section>
-
-<section class="page" id="pesan">
-  <div class="greeting"><div class="eyebrow">KONEVO CHAT</div><h1 class="h1">Pesan 💬</h1><div class="sub">Semua obrolanmu dalam satu tempat.</div></div>
-  <input class="search" id="chatSearch" placeholder="🔎 Cari percakapan..." autocomplete="off">
-  <div id="chatList">
-    <button class="chatrow" data-chat="Raka Pratama"><div class="avatar">RP</div><div class="chattext"><strong>Raka Pratama</strong><span>Wah, kapan kita mabar lagi?</span></div><div class="time">10.42<br><span class="badgecount">2</span></div></button>
-    <button class="chatrow" data-chat="Komunitas Konevo"><div class="avatar">🌐</div><div class="chattext"><strong>Komunitas Konevo</strong><span>Admin: Selamat datang di komunitas!</span></div><div class="time">09.18</div></button>
-    <button class="chatrow" data-chat="Nadia Putri"><div class="avatar">NP</div><div class="chattext"><strong>Nadia Putri</strong><span>Oke, sampai nanti ya 👋</span></div><div class="time">Kemarin</div></button>
-    <button class="chatrow" data-chat="Dimas Gaming"><div class="avatar">DG</div><div class="chattext"><strong>Dimas Gaming</strong><span>Gas mabar malam ini 🎮</span></div><div class="time">Kemarin</div></button>
-  </div>
-  <div class="notice">💡 Contoh percakapan untuk pratinjau. Pengiriman dan penyimpanan pesan belum aktif.</div>
-</section>
-
-<section class="page" id="teman">
-  <div class="greeting"><div class="eyebrow">KONEVO PEOPLE</div><h1 class="h1">Teman 🤝</h1><div class="sub">Terhubung dengan orang-orang yang satu frekuensi.</div></div>
-  <input class="search" id="friendSearch" placeholder="🔎 Cari nama teman..." autocomplete="off">
-  <div id="friendList">
-    <div class="friendrow" data-friend="Raka Pratama"><div class="avatar">RP</div><div class="chattext"><strong>Raka Pratama</strong><span class="online">● Online · contoh</span></div><button class="secondary addFriend" data-name="Raka Pratama">Tambah</button></div>
-    <div class="friendrow" data-friend="Nadia Putri"><div class="avatar">NP</div><div class="chattext"><strong>Nadia Putri</strong><span>Terakhir aktif · contoh</span></div><button class="secondary addFriend" data-name="Nadia Putri">Tambah</button></div>
-    <div class="friendrow" data-friend="Dimas Gaming"><div class="avatar">DG</div><div class="chattext"><strong>Dimas Gaming</strong><span class="online">● Online · contoh</span></div><button class="secondary addFriend" data-name="Dimas Gaming">Tambah</button></div>
-  </div>
-  <div class="notice">Status dan akun di halaman ini adalah data contoh, bukan pengguna sungguhan.</div>
-</section>
-
-<section class="page" id="profil">
-  <div class="greeting"><div class="eyebrow">AKUN KONEVO</div><h1 class="h1">Profil kamu ✨</h1><div class="sub">Identitasmu, gayamu.</div></div>
-  <div class="profilehero"><div class="profileavatar">👤</div><h2>Pandu</h2><p>@pandu · profil demo</p><div class="levelbar"><span></span></div><div style="font-size:11px;color:#c0cfff">Level 3 · Penjelajah Frekuensi</div><button class="primary" style="margin-top:15px" id="editProfile">Edit profil</button></div>
-  <div class="sectionhead"><h3>Kustomisasi</h3></div>
-  <button class="profileitem" data-feature="Bingkai profil"><div class="tileicon">🖼️</div><div><strong>Bingkai profil</strong><span>Pilih bingkai yang mencerminkan gayamu</span></div></button>
-  <button class="profileitem" data-feature="Wallpaper"><div class="tileicon">🌌</div><div><strong>Wallpaper</strong><span>Atur tampilan profilmu</span></div></button>
-  <button class="profileitem" data-feature="Poin Konevo"><div class="tileicon">💎</div><div><strong>Poin Konevo</strong><span>Saldo demo · belum terhubung</span></div></button>
-  <button class="profileitem" data-feature="Premium"><div class="tileicon">👑</div><div><strong>Konevo Premium</strong><span>Lihat paket dan keuntungan</span></div></button>
-  <button class="profileitem" data-feature="Pengaturan"><div class="tileicon">⚙️</div><div><strong>Pengaturan</strong><span>Privasi, notifikasi, dan keamanan</span></div></button>
-  <div class="foot">Created by Pandu Triat Mojo</div>
-</section>
+<footer>Konevo • versi awal koneksi audio</footer>
 </main>
-
-<nav class="bottomnav" aria-label="Navigasi utama">
-  <button class="navbtn active" data-go="home"><span class="navico">⌂</span>Beranda</button>
-  <button class="navbtn" data-go="radio"><span class="navico">📻</span>Radio</button>
-  <button class="navbtn" data-go="pesan"><span class="navico">💬</span>Pesan</button>
-  <button class="navbtn" data-go="teman"><span class="navico">🫂</span>Teman</button>
-  <button class="navbtn" data-go="profil"><span class="navico">👤</span>Profil</button>
-</nav>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="modalback" id="modalBack">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h3 id="modalTitle">Konevo</h3><p id="modalText">Informasi</p>
-    <input class="search" id="modalInput" style="display:none" placeholder="Masukkan kode akses" autocomplete="off">
-    <div class="modalbuttons"><button class="secondary" id="modalCancel">Tutup</button><button class="primary" id="modalConfirm">Oke</button></div>
-  </div>
-</div>
-</div>
 <script>
-(function(){
-const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-const pages=$$('.page');let currentRoom='utama',muted=false,isTalking=false,modalAction=null,toastTimer=null;
-const rooms={
- utama:{name:'Ruang Utama',icon:'🌐',desc:'Ruang publik · semua anggota'},
- santai:{name:'Ngopi Santai',icon:'☕',desc:'Obrolan ringan · ruang demo'},
- game:{name:'Zona Gaming',icon:'🎮',desc:'Komunitas gaming · ruang demo'},
- musik:{name:'Teman Musik',icon:'🎧',desc:'Komunitas musik · ruang demo'},
- privat:{name:'Ruang Privat',icon:'🔒',desc:'Akses dengan kode · simulasi'}
-};
-const wave=$('#wave');for(let i=0;i<25;i++){const bar=document.createElement('i');bar.style.height=(8+(i*7%19))+'px';wave.appendChild(bar)}
-function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500)}
-function showPage(id){if(isTalking)stopTalking();pages.forEach(p=>p.classList.toggle('active',p.id===id));$$('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.go===id||(id==='room'&&b.dataset.go==='radio')));window.scrollTo({top:0,behavior:'smooth'})}
-function openRoom(id){currentRoom=rooms[id]?id:'utama';const r=rooms[currentRoom];$('#roomIcon').textContent=r.icon;$('#roomName').textContent=r.name;$('#roomDesc').textContent=r.desc;$('#speakerName').textContent='Belum ada yang berbicara';$('#speakerStatus').textContent='Ruang demo · audio belum tersambung';$('#pttLabel').textContent='Tekan dan tahan untuk bicara';showPage('room')}
-function startTalking(e){if(e)e.preventDefault();if(isTalking)return;isTalking=true;$('#ptt').classList.add('talking');wave.classList.add('talking');$('#speakerName').textContent='Kamu sedang berbicara';$('#speakerStatus').textContent='Simulasi mikrofon · belum mengirim audio';$('#pttLabel').textContent='Sedang bicara… lepaskan untuk selesai';if(navigator.vibrate)navigator.vibrate(25)}
-function stopTalking(){if(!isTalking)return;isTalking=false;$('#ptt').classList.remove('talking');wave.classList.remove('talking');$('#speakerName').textContent='Belum ada yang berbicara';$('#speakerStatus').textContent='Ruang demo · audio belum tersambung';$('#pttLabel').textContent='Tekan dan tahan untuk bicara'}
-function showModal(title,txt,opts={}){$('#modalTitle').textContent=title;$('#modalText').textContent=txt;$('#modalInput').style.display=opts.input?'block':'none';$('#modalInput').value='';$('#modalConfirm').textContent=opts.confirm||'Oke';modalAction=opts.action||null;$('#modalBack').classList.add('show');if(opts.input)setTimeout(()=>$('#modalInput').focus(),100)}
-function closeModal(){$('#modalBack').classList.remove('show');modalAction=null}
-$$('[data-go]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.go)));
-$('#profileShortcut').addEventListener('click',()=>showPage('profil'));
-$('#backRadio').addEventListener('click',()=>showPage('radio'));
-$('#leaveRoom').addEventListener('click',()=>{stopTalking();showPage('radio')});
-$$('[data-room]').forEach(b=>b.addEventListener('click',()=>openRoom(b.dataset.room)));
-$('#ptt').addEventListener('pointerdown',startTalking);
-$('#ptt').addEventListener('pointerup',stopTalking);
-$('#ptt').addEventListener('pointercancel',stopTalking);
-$('#ptt').addEventListener('lostpointercapture',stopTalking);
-$('#ptt').addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTalking()});
-$('#muteBtn').addEventListener('click',()=>{muted=!muted;$('#muteBtn').textContent=muted?'🔇 Suara: mati':'🔊 Suara: aktif';toast(muted?'Simulasi suara dimatikan':'Simulasi suara diaktifkan')});
-$('#inviteBtn').addEventListener('click',()=>showModal('Info ruang demo','Ruang: '+rooms[currentRoom].name+'. Fitur berbagi tautan akan aktif setelah backend dibuat.'));
-$('#privateRoomBtn').addEventListener('click',()=>showModal('Gabung ruang privat','Masukkan kode akses ruang. Untuk saat ini kode hanya membuka simulasi lokal.',{input:true,confirm:'Gabung',action:code=>{if(!code.trim()){toast('Masukkan kode akses dulu');return}closeModal();openRoom('privat');toast('Mode ruang privat demo dibuka')}}));
-$('#modalCancel').addEventListener('click',closeModal);
-$('#modalConfirm').addEventListener('click',()=>{const act=modalAction;if(act)act($('#modalInput').value);else closeModal()});
-$('#modalBack').addEventListener('click',e=>{if(e.target===$('#modalBack'))closeModal()});
-function filterRows(input,selector,attr){$(input).addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$(selector).forEach(el=>el.style.display=el.getAttribute(attr).toLowerCase().includes(q)?'':'none')})}
-filterRows('#channelSearch','#channelList .channel','data-room');
-$('#chatSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$('#chatList .chatrow').forEach(el=>el.style.display=el.dataset.chat.toLowerCase().includes(q)?'':'none')});
-$('#friendSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$('#friendList .friendrow').forEach(el=>el.dataset.friend.toLowerCase().includes(q)?el.style.display='':el.style.display='none')});
-$$('[data-chat]').forEach(b=>b.addEventListener('click',()=>showModal(b.dataset.chat,'Ini contoh percakapan. Pengiriman pesan belum tersedia karena backend chat belum terhubung.')));
-$$('.addFriend').forEach(b=>b.addEventListener('click',()=>{b.textContent='Terkirim ✓';b.disabled=true;b.style.opacity='.65';toast('Permintaan teman demo ditandai terkirim')}));
-$$('[data-feature]').forEach(b=>b.addEventListener('click',()=>showModal(b.dataset.feature,'Bagian ini masih berupa pratinjau. Fitur dan penyimpanan akun akan dibuat pada tahap backend.')));
-$('#editProfile').addEventListener('click',()=>showModal('Edit profil','Pengeditan profil tersimpan akan tersedia setelah sistem akun dibuat.'));
-$('#soundBtn').addEventListener('click',()=>{showModal('Notifikasi','Pengaturan notifikasi belum terhubung. Tombol ini hanya pratinjau.')});
-})();
-</script>
-</body>
-</html>
+const API = "https://konevo-api.pandutriatmojo17.workers.dev";
+const $ = id => document.getElementById(id);
+let token = localStorage.getItem("konevo_token") || "";
+let mode = "login", activeRoom = null, audioSessionId = null, pc = null, micStream = null, currentTrack = null, busy = false, pressStarted = false;
+function message(id, text, kind=""){ const el=$(id);el.textContent=text;el.classList.remove("hidden","error","success");if(kind)el.classList.add(kind); }
+async function api(path, options={}) {
+ const headers={"Content-Type":"application/json",...(token?{"Authorization":"Bearer "+token}:{}),...(options.headers||{})};
+ const res=await fetch(API+path,{...options,headers});
+ const data=await res.json().catch(()=>({error:"Respons server tidak valid"}));
+ if(!res.ok) throw new Error(data.error||("HTTP "+res.status));
+ return data;
+}
+async function health(){try{const d=await api("/api/health",{headers:{}});$("apiStatus").textContent=d.status==="online"?"API online":"API bermasalah";}catch{$("apiStatus").textContent="API tidak terjangkau";}}
+function setMode(next){mode=next;const reg=mode==="register";$("nameWrap").classList.toggle("hidden",!reg);$("phoneWrap").classList.toggle("hidden",!reg);$("displayName").required=reg;$("phone").required=reg;$("authSubmit").textContent=reg?"Buat akun":"Login";$("loginTab").className=reg?"secondary":"";$("registerTab").className=reg?"":"secondary";$("authMessage").classList.add("hidden");}
+$("loginTab").onclick=()=>setMode("login");$("registerTab").onclick=()=>setMode("register");
+$("authForm").onsubmit=async e=>{e.preventDefault();$("authSubmit").disabled=true;try{
+ if(mode==="register"){const d=await api("/api/register",{method:"POST",body:JSON.stringify({displayName:$("displayName").value,phone:$("phone").value,email:$("email").value,password:$("password").value})});message("authMessage",d.message||"Akun dibuat. Silakan login.","success");setMode("login");}
+ else {const d=await api("/api/login",{method:"POST",body:JSON.stringify({email:$("email").value,password:$("password").value})});token=d.token;localStorage.setItem("konevo_token",token);await showApp(d.user);}
+ }catch(err){message("authMessage",err.message,"error");}finally{$("authSubmit").disabled=false;}};
+async function showApp(user){$("authCard").classList.add("hidden");$("appCard").classList.remove("hidden");$("hello").textContent="Halo, "+(user.displayName||user.display_name||"Kawan");await loadRooms();}
+async function loadRooms(){try{const d=await api("/api/rooms");const list=$("roomList");list.innerHTML="";if(!d.rooms.length){list.innerHTML='<p class="sub">Belum ada ruang. Buat ruang pertamamu.</p>';return;}for(const r of d.rooms){const item=document.createElement("div");item.className="room";const info=document.createElement("div");const title=document.createElement("strong");title.textContent=r.name;const sub=document.createElement("small");sub.textContent="Ruang utama • "+r.room_type;info.append(title,sub);const btn=document.createElement("button");btn.textContent="Gabung";btn.onclick=()=>joinRoom(r);item.append(info,btn);list.append(item);}}catch(e){$("roomList").textContent=e.message;}}
+$("createRoom").onclick=async()=>{const name=$("roomName").value.trim();if(!name)return;try{await api("/api/rooms",{method:"POST",body:JSON.stringify({name})});$("roomName").value="";await loadRooms();}catch(e){alert(e.message)}};
+async function waitIce(peer){if(peer.iceGatheringState==="complete")return;await new Promise(resolve=>{const timer=setTimeout(resolve,7000);peer.addEventListener("icegatheringstatechange",()=>{if(peer.iceGatheringState==="complete"){clearTimeout(timer);resolve();}});});}
+async function joinRoom(room){try{activeRoom=room;$("appCard").classList.add("hidden");$("radioCard").classList.remove("hidden");$("roomTitle").textContent=room.name;$("radioState").textContent="Menyiapkan audio…";$("ptt").disabled=true;
+ const s=await api("/api/audio/session",{method:"POST",body:JSON.stringify({roomId:room.id})});audioSessionId=s.audioSessionId;pc=new RTCPeerConnection({iceServers:[{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:stun.l.google.com:19302"}]});
+ pc.onconnectionstatechange=()=>{$("radioState").textContent=pc.connectionState;};
+ pc.ontrack=e=>{const stream=e.streams?.[0]||new MediaStream([e.track]);$("remoteAudio").srcObject=stream;$("remoteAudio").play().catch(()=>message("radioMessage","Ketuk layar sekali agar audio bisa diputar."));};
+ const sub=await api("/api/audio/subscribe",{method:"POST",body:JSON.stringify({roomId:room.id})});
+ if(sub.tracks?.length){for(const t of sub.tracks)pc.addTransceiver("audio",{direction:"recvonly"});const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitIce(pc);const resp=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId:sub.audioSessionId,sessionDescription:pc.localDescription,tracks:pc.getTransceivers().map((tr,i)=>({location:"remote",mid:tr.mid,sessionId:sub.tracks[i]?.sessionId,trackName:sub.tracks[i]?.trackName})).filter(x=>x.sessionId)})});if(resp.sessionDescription)await pc.setRemoteDescription(resp.sessionDescription);audioSessionId=s.audioSessionId;}
+ $("ptt").disabled=false;$("pttHint").textContent="Tekan dan tahan untuk bicara. Lepaskan untuk berhenti.";message("radioMessage","Terhubung ke ruang. Jika belum ada anggota yang bicara, suara yang diterima akan hening.","success");
+ }catch(e){message("radioMessage","Gagal menyambungkan audio: "+e.message,"error");$("radioState").textContent="Gagal";}}
+async function startTalking(){if(busy||!activeRoom||!pc)return;busy=true;try{micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});const track=micStream.getAudioTracks()[0];currentTrack=pc.addTrack(track,micStream);const offer=await pc.createOffer();await pc.setLocalDescription(offer);await waitIce(pc);const result=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId,sessionDescription:pc.localDescription,tracks:pc.getTransceivers().filter(t=>t.sender.track===track).map(t=>({location:"local",mid:t.mid,trackName:"konevo-audio"}))})});if(result.sessionDescription)await pc.setRemoteDescription(result.sessionDescription);$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";}catch(e){if(micStream)micStream.getTracks().forEach(t=>t.stop());message("radioMessage","Mikrofon gagal aktif: "+e.message,"error");}finally{busy=false;}}
+function stopTalking(){if(micStream)micStream.getTracks().forEach(t=>t.stop());if(pc&&currentTrack){const sender=pc.getSenders().find(s=>s.track===currentTrack);if(sender)pc.removeTrack(sender);currentTrack=null;}micStream=null;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";if(pc&&pc.connectionState==="connected")$("radioState").textContent="Terhubung";}
+const ptt=$("ptt");ptt.addEventListener("pointerdown",e=>{if(ptt.disabled)return;e.preventDefault();pressStarted=true;ptt.setPointerCapture?.(e.pointerId);startTalking();});["pointerup","pointercancel","lostpointercapture"].forEach(ev=>ptt.addEventListener(ev,()=>{if(pressStarted){pressStarted=false;stopTalking();}}));
+async function leaveRoom(){stopTalking();if(pc){pc.close();pc=null;}if(micStream)micStream.getTracks().forEach(t=>t.stop());audioSessionId=null;activeRoom=null;$("remoteAudio").srcObject=null;$("radioCard").classList.add("hidden");$("appCard").classList.remove("hidden");await loadRooms();}
+$("leaveRoom").onclick=leaveRoom;
+$("logout").onclick=async()=>{await leaveRoom().catch(()=>{});token="";localStorage.removeItem("konevo_token");$("appCard").classList.add("hidden");$("authCard").classList.remove("hidden");};
+(async()=>{await health();if(token){try{const d=await api("/api/me");await showApp({displayName:d.user.display_name});}catch{token="";localStorage.removeItem("konevo_token");}}})();
+</script></body></html>
