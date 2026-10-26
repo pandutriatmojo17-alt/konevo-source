@@ -31,6 +31,7 @@ input,button{font:inherit;border-radius:12px;padding:12px 13px;border:1px solid 
 <div class="row" style="margin:14px 0"><input id="roomName" placeholder="Nama ruang baru"><button id="createRoom" style="width:auto">Buat</button></div><div id="roomList"><p class="sub">Memuat ruang…</p></div></section>
 <section class="card hidden" id="radioCard">
 <div class="row" style="justify-content:space-between"><div><h2 id="roomTitle">Ruang Radio</h2><span class="pill" id="radioState">Belum tersambung</span></div><button id="leaveRoom" class="secondary small">Keluar ruang</button></div>
+<div class="stack" style="margin:14px 0"><label for="talkMode" class="sub">Mode bicara</label><select id="talkMode" style="font:inherit;border-radius:12px;padding:12px 13px;border:1px solid #344660;background:#0d1727;color:var(--text);width:100%"><option value="ptt">Push-to-Talk — tahan untuk bicara</option><option value="click">Klik untuk bicara — ketuk untuk mute</option><option value="open">Mikrofon terbuka — selalu aktif</option></select></div>
 <div class="center"><button id="ptt" class="ptt" disabled>TAHAN UNTUK<br>BICARA</button><p class="sub" id="pttHint">Pilih ruang untuk memulai.</p></div>
 <audio id="remoteAudio" autoplay playsinline></audio><div id="radioMessage" class="notice">Audio memerlukan izin mikrofon. Izinkan akses mikrofon saat diminta.</div></section>
 <footer>Konevo • versi awal koneksi audio</footer></main>
@@ -39,6 +40,7 @@ const API="https://konevo-api.pandutriatmojo17.workers.dev";
 const $=id=>document.getElementById(id);
 let token=localStorage.getItem("konevo_token")||"",mode="login",activeRoom=null;
 let subPc=null,pubPc=null,pubAudioSessionId=null,micStream=null,micTrack=null,busy=false,pressStarted=false,subAudioSessionId=null;
+let talkMode=localStorage.getItem("konevo_talk_mode")||"ptt",talkActive=false;
 function message(id,text,kind=""){const el=$(id);el.textContent=text;el.classList.remove("hidden","error","success");if(kind)el.classList.add(kind);}
 async function api(path,options={}){const headers={"Content-Type":"application/json",...(token?{"Authorization":"Bearer "+token}:{}),...(options.headers||{})};const res=await fetch(API+path,{...options,headers});const data=await res.json().catch(()=>({error:"Respons server tidak valid"}));if(!res.ok)throw new Error(data.error||("HTTP "+res.status));return data;}
 async function health(){try{const d=await api("/api/health",{headers:{}});$("apiStatus").textContent=d.status==="online"?"API online":"API bermasalah";}catch{$("apiStatus").textContent="API tidak terjangkau";}}
@@ -48,6 +50,19 @@ $("authForm").onsubmit=async e=>{e.preventDefault();$("authSubmit").disabled=tru
 async function showApp(user){$("authCard").classList.add("hidden");$("appCard").classList.remove("hidden");$("hello").textContent="Halo, "+(user.displayName||user.display_name||"Kawan");await loadRooms();}
 async function loadRooms(){try{const d=await api("/api/rooms");const list=$("roomList");list.innerHTML="";if(!d.rooms.length){list.innerHTML='<p class="sub">Belum ada ruang. Buat ruang pertamamu.</p>';return;}for(const r of d.rooms){const item=document.createElement("div");item.className="room";const info=document.createElement("div"),title=document.createElement("strong"),sub=document.createElement("small");title.textContent=r.name;sub.textContent="Ruang utama • "+r.room_type;info.append(title,sub);const btn=document.createElement("button");btn.textContent="Gabung";btn.onclick=()=>joinRoom(r);item.append(info,btn);list.append(item);}}catch(e){$("roomList").textContent=e.message;}}
 $("createRoom").onclick=async()=>{const name=$("roomName").value.trim();if(!name)return;try{await api("/api/rooms",{method:"POST",body:JSON.stringify({name})});$("roomName").value="";await loadRooms();}catch(e){alert(e.message)}};
+function applyTalkMode(){
+ const ptt=$("ptt"),hint=$("pttHint"),sel=$("talkMode");if(sel)sel.value=talkMode;
+ if(talkMode==="ptt"){ptt.textContent="TAHAN UNTUK BICARA";hint.textContent="Tekan dan tahan untuk bicara. Lepaskan untuk mute.";}
+ else if(talkMode==="click"){ptt.textContent=talkActive?"KETUK UNTUK MUTE":"KETUK UNTUK BICARA";hint.textContent="Ketuk sekali untuk bicara, ketuk lagi untuk mute.";}
+ else{ptt.textContent=talkActive?"MIKROFON AKTIF":"AKTIFKAN MIKROFON";hint.textContent="Mikrofon aktif sampai kamu mematikannya atau keluar ruang.";}
+ ptt.classList.toggle("live",talkActive);
+}
+$("talkMode").addEventListener("change",async()=>{
+ const next=$("talkMode").value;
+ if(micTrack)micTrack.enabled=false;
+ talkActive=false;talkMode=next;localStorage.setItem("konevo_talk_mode",talkMode);applyTalkMode();
+ if(activeRoom&&talkMode==="open")await startTalking();
+});
 function waitIce(peer,timeout=8000){if(peer.iceGatheringState==="complete")return Promise.resolve();return new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;clearTimeout(timer);peer.removeEventListener("icegatheringstatechange",check);resolve();};const check=()=>{if(peer.iceGatheringState==="complete")finish();};const timer=setTimeout(finish,timeout);peer.addEventListener("icegatheringstatechange",check);});}
 function waitConnected(peer,timeout=12000){if(peer.connectionState==="connected")return Promise.resolve();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error("Koneksi WebRTC belum tersambung. Periksa jaringan/STUN-TURN."));},timeout);const check=()=>{if(peer.connectionState==="connected"){cleanup();resolve();}else if(peer.connectionState==="failed"||peer.connectionState==="closed"){cleanup();reject(new Error("Koneksi WebRTC "+peer.connectionState));}};const cleanup=()=>{clearTimeout(timer);peer.removeEventListener("connectionstatechange",check);};peer.addEventListener("connectionstatechange",check);check();});}
 function newPeer(){const p=new RTCPeerConnection({iceServers:[{urls:"stun:stun.cloudflare.com:3478"},{urls:"stun:stun.l.google.com:19302"}]});p.onconnectionstatechange=()=>{if(activeRoom&&p===subPc)$("radioState").textContent="Audio masuk: "+p.connectionState;};return p;}
@@ -63,30 +78,39 @@ try{
    await api("/api/audio/renegotiate",{method:"PUT",body:JSON.stringify({audioSessionId:subAudioSessionId,sessionDescription:subPc.localDescription})});
    await waitConnected(subPc).catch(e=>{message("radioMessage",e.message,"error");});
  } else {message("radioMessage","Kamu sudah masuk ruang. Belum ada anggota lain yang memancarkan audio. Jika anggota mulai bicara sebelum kamu bergabung ulang, keluar lalu gabung lagi.","");}
- $("ptt").disabled=false;$("pttHint").textContent="Tekan dan tahan untuk bicara. Lepaskan untuk mute.";if(!$("radioMessage").classList.contains("error"))message("radioMessage","Siap. Tekan dan tahan tombol biru untuk bicara.","success");
+ $("ptt").disabled=false;applyTalkMode();if(!$("radioMessage").classList.contains("error"))message("radioMessage","Siap. Pilih mode bicara lalu gunakan tombol mikrofon.","success");if(talkMode==="open")await startTalking();
 }catch(e){message("radioMessage","Gagal menyiapkan ruang: "+e.message,"error");$("radioState").textContent="Gagal";$("ptt").disabled=true;}
 }
-async function startTalking(){if(busy||!activeRoom)return;busy=true;$("ptt").disabled=true;try{
- if(pubPc&&pubPc.connectionState==="connected"&&micTrack){micTrack.enabled=true;$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";return;}
- await cleanupPublisher();
- micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
- micTrack=micStream.getAudioTracks()[0];
- const s=await api("/api/audio/session",{method:"POST",body:JSON.stringify({roomId:activeRoom.id})});pubAudioSessionId=s.audioSessionId;
- pubPc=newPeer();pubPc.addTrack(micTrack,micStream);
- const offer=await pubPc.createOffer();await pubPc.setLocalDescription(offer);await waitIce(pubPc);
- const trans=pubPc.getTransceivers().find(t=>t.sender.track===micTrack);
- const result=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId:pubAudioSessionId,sessionDescription:pubPc.localDescription,tracks:[{location:"local",mid:trans.mid,trackName:"konevo-audio"}]})});
- if(!result.sessionDescription)throw new Error("SFU tidak mengembalikan jawaban SDP untuk mikrofon.");
- await pubPc.setRemoteDescription(result.sessionDescription);
- await waitConnected(pubPc);
- if(!pressStarted){micTrack.enabled=false;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";$("radioState").textContent="Terhubung • mikrofon mute";message("radioMessage","Koneksi siap. Tekan dan tahan untuk mulai bicara.","success");}
- else{$("ptt").classList.add("live");$("ptt").textContent="SEDANG BICARA";$("radioState").textContent="Mikrofon aktif";message("radioMessage","Mikrofon aktif. Lepaskan tombol untuk mute.","success");}
- }catch(e){await cleanupPublisher();message("radioMessage","Mikrofon gagal aktif: "+e.message,"error");$("radioState").textContent="Gagal";}finally{busy=false;$("ptt").disabled=false;}}
-function stopTalking(){if(micTrack)micTrack.enabled=false;$("ptt").classList.remove("live");$("ptt").textContent="TAHAN UNTUK BICARA";if(activeRoom)$("radioState").textContent=subPc?.connectionState==="connected"?"Terhubung • mikrofon mute":"Siap";}
+async function startTalking(){
+ if(busy||!activeRoom)return;
+ if(pubPc&&pubPc.connectionState==="connected"&&micTrack){micTrack.enabled=true;talkActive=true;applyTalkMode();$("radioState").textContent="Mikrofon aktif";return;}
+ busy=true;$("ptt").disabled=true;
+ try{
+  await cleanupPublisher();
+  micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+  micTrack=micStream.getAudioTracks()[0];
+  const s=await api("/api/audio/session",{method:"POST",body:JSON.stringify({roomId:activeRoom.id})});pubAudioSessionId=s.audioSessionId;
+  pubPc=newPeer();pubPc.addTrack(micTrack,micStream);
+  const offer=await pubPc.createOffer();await pubPc.setLocalDescription(offer);await waitIce(pubPc);
+  const trans=pubPc.getTransceivers().find(t=>t.sender.track===micTrack);
+  const result=await api("/api/audio/publish",{method:"POST",body:JSON.stringify({audioSessionId:pubAudioSessionId,sessionDescription:pubPc.localDescription,tracks:[{location:"local",mid:trans.mid,trackName:"konevo-audio"}]})});
+  if(!result.sessionDescription)throw new Error("SFU tidak mengembalikan jawaban SDP untuk mikrofon.");
+  await pubPc.setRemoteDescription(result.sessionDescription);await waitConnected(pubPc);
+  if(talkMode==="ptt"&&!pressStarted){micTrack.enabled=false;talkActive=false;$("radioState").textContent="Terhubung • mikrofon mute";}
+  else{micTrack.enabled=true;talkActive=true;$("radioState").textContent="Mikrofon aktif";}
+  applyTalkMode();message("radioMessage",talkActive?"Mikrofon aktif.":"Koneksi siap. Tekan tombol untuk mulai bicara.","success");
+ }catch(e){await cleanupPublisher();talkActive=false;applyTalkMode();message("radioMessage","Mikrofon gagal aktif: "+e.message,"error");$("radioState").textContent="Gagal";}
+ finally{busy=false;$("ptt").disabled=false;}
+}
+function stopTalking(){if(micTrack)micTrack.enabled=false;talkActive=false;applyTalkMode();if(activeRoom)$("radioState").textContent=subPc?.connectionState==="connected"?"Terhubung • mikrofon mute":"Siap";}
 async function cleanupPublisher(){if(micStream)micStream.getTracks().forEach(t=>t.stop());micStream=null;micTrack=null;if(pubPc){pubPc.close();pubPc=null;}pubAudioSessionId=null;}
-async function cleanupAudio(){stopTalking();await cleanupPublisher();if(subPc){subPc.close();subPc=null;}subAudioSessionId=null;$("remoteAudio").srcObject=null;}
-const ptt=$("ptt");ptt.addEventListener("pointerdown",e=>{if(ptt.disabled)return;e.preventDefault();pressStarted=true;ptt.setPointerCapture?.(e.pointerId);startTalking();});["pointerup","pointercancel","lostpointercapture"].forEach(ev=>ptt.addEventListener(ev,()=>{if(pressStarted){pressStarted=false;stopTalking();}}));
+async function cleanupAudio(){stopTalking();talkActive=false;await cleanupPublisher();applyTalkMode();if(subPc){subPc.close();subPc=null;}subAudioSessionId=null;$("remoteAudio").srcObject=null;}
+const ptt=$("ptt");
+ptt.addEventListener("pointerdown",e=>{if(ptt.disabled||talkMode!=="ptt")return;e.preventDefault();pressStarted=true;ptt.setPointerCapture?.(e.pointerId);startTalking();});
+["pointerup","pointercancel","lostpointercapture"].forEach(ev=>ptt.addEventListener(ev,()=>{if(talkMode==="ptt"&&pressStarted){pressStarted=false;stopTalking();}}));
+ptt.addEventListener("click",()=>{if(ptt.disabled||talkMode==="ptt")return;if(talkActive){stopTalking();message("radioMessage","Mikrofon mute.","success");}else startTalking();});
+
 async function leaveRoom(){await cleanupAudio();activeRoom=null;$("radioCard").classList.add("hidden");$("appCard").classList.remove("hidden");await loadRooms();}
 $("leaveRoom").onclick=leaveRoom;$("logout").onclick=async()=>{await leaveRoom().catch(()=>{});token="";localStorage.removeItem("konevo_token");$("appCard").classList.add("hidden");$("authCard").classList.remove("hidden");};
-(async()=>{await health();if(token){try{const d=await api("/api/me");await showApp({displayName:d.user.display_name});}catch{token="";localStorage.removeItem("konevo_token");}}})();
+applyTalkMode();(async()=>{await health();if(token){try{const d=await api("/api/me");await showApp({displayName:d.user.display_name});}catch{token="";localStorage.removeItem("konevo_token");}}})();
 </script></body></html>
