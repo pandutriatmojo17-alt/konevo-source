@@ -1,65 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konevo</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #172033;
-    }
-    header {
-      padding: 22px 20px;
-      background: #153e75;
-      color: white;
-      font-size: 1.35rem;
-      font-weight: 700;
-    }
-    main {
-      max-width: 720px;
-      margin: 48px auto;
-      padding: 0 20px;
-      text-align: center;
-    }
-    .card {
-      padding: 36px 24px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 28px rgba(20, 40, 80, 0.08);
-    }
-    h1 { margin-top: 0; font-size: 2rem; }
-    p { color: #536078; line-height: 1.6; }
-    .button {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 12px 22px;
-      border-radius: 10px;
-      background: #1769e0;
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-    }
-    footer {
-      padding: 24px;
-      text-align: center;
-      color: #68758a;
-      font-size: 0.9rem;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081225">
+<title>Konevo — Connect Your Circle</title>
+<style>
+:root{--bg:#07101f;--panel:#101d33;--panel2:#14243d;--text:#edf5ff;--muted:#91a5c4;--blue:#49c8ff;--purple:#9c78ff;--line:#243753;--green:#50e3b1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#18254c 0,transparent 40%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}.app{max-width:1080px;margin:auto;padding:22px 18px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:11px}.logo{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--purple));color:#07101f;font-size:22px;font-weight:900;box-shadow:0 0 25px #49c8ff35}.brand h1{font-size:22px;letter-spacing:.5px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.avatar{width:40px;height:40px;border:1px solid #365073;border-radius:50%;display:grid;place-items:center;background:#152743;font-weight:700}.welcome{margin:18px 0 22px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.welcome h2{font-size:clamp(27px,5vw,40px);line-height:1.12;margin:8px 0}.welcome p{color:var(--muted);margin:0}.status{display:inline-flex;align-items:center;gap:7px;color:#b7f9df;font-size:12px;background:#12352f;padding:7px 10px;border-radius:30px;margin-top:14px}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 9px var(--green)}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:linear-gradient(145deg,#12213aee,#0d192cee);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 15px 40px #0002}.card h3{font-size:16px;margin:0 0 6px}.sub{font-size:13px;color:var(--muted);margin:0}.radio-card{position:relative;overflow:hidden;min-height:245px;background:radial-gradient(circle at 80% 40%,#5144a744,transparent 35%),linear-gradient(140deg,#122b4b,#11162e)}.radio-card:after{content:'〰';position:absolute;right:14px;top:35px;font-size:100px;color:#49c8ff1c;transform:rotate(-15deg)}.radio-card h3{font-size:21px;margin-top:20px}.radio-orb{width:86px;height:86px;border-radius:50%;margin:19px 0 15px;background:radial-gradient(circle,#8ee4ff 0,#4b8dff 40%,#6949d9 68%,#18264b 72%);box-shadow:0 0 0 10px #49c8ff0d,0 0 35px #4b8dff55;display:grid;place-items:center;position:relative;z-index:1}.radio-orb span{font-size:28px;color:white}.primary{border:0;border-radius:12px;padding:12px 16px;color:#07101f;font-weight:800;background:linear-gradient(100deg,var(--blue),#a6a2ff);box-shadow:0 5px 20px #49c8ff20}.secondary{border:1px solid #355074;border-radius:11px;background:#13233b;color:var(--text);padding:10px 13px;font-weight:650}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.text-button{border:0;background:none;color:var(--blue);font-weight:700}.people{display:flex;gap:12px;overflow:auto;padding:4px 0 8px}.person{min-width:70px;text-align:center}.person .face{width:48px;height:48px;margin:0 auto 8px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,#213e63,#43336e);font-size:20px;border:1px solid #385577}.person b{display:block;font-size:12px}.person small{color:var(--green);font-size:10px}.channel{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #20324c}.channel:first-of-type{border-top:0}.channel-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#172d4b;font-size:20px}.channel-info{flex:1;min-width:0}.channel-info b{display:block;font-size:13px}.channel-info small{display:block;color:var(--muted);margin-top:4px;font-size:11px}.pill{font-size:10px;color:#9be9ff;background:#163b50;border-radius:20px;padding:5px 8px}.lower{margin-top:16px}.nav{position:fixed;z-index:5;bottom:0;left:0;right:0;display:flex;justify-content:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#081225eF;backdrop-filter:blur(18px);border-top:1px solid #20324b}.nav-inner{width:min(600px,100%);display:flex;justify-content:space-around;gap:4px}.nav button{flex:1;max-width:110px;border:0;background:transparent;color:#8296b5;display:flex;flex-direction:column;align-items:center;gap:5px;padding:7px 4px;font-size:10px;border-radius:12px}.nav button span{font-size:19px}.nav button.active{color:var(--blue);background:#16304b}.view{display:none}.view.active{display:block}.empty{padding:26px 8px;text-align:center;color:var(--muted)}.empty .big{font-size:35px;margin-bottom:10px}.field{width:100%;margin:14px 0;padding:13px 14px;border-radius:12px;background:#091629;border:1px solid #2b4262;color:var(--text);outline:none}.field:focus{border-color:var(--blue)}.message{padding:12px;border-radius:14px;background:#142844;margin:9px 0;font-size:13px}.message small{display:block;color:var(--muted);margin-top:4px}.setting-row{display:flex;justify-content:space-between;gap:12px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px}.notice{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.5}
+@media(max-width:700px){.app{padding:17px 14px 100px}.grid{grid-template-columns:1fr}.radio-card{min-height:220px}.card{padding:17px}.welcome{margin-top:14px}.top{margin-bottom:18px}}
+</style>
 </head>
 <body>
-  <header>Konevo</header>
-  <main>
-    <section class="card">
-      <h1>Selamat datang di Konevo</h1>
-      <p>Ini adalah halaman utama awal Konevo. Tampilan dan fitur aplikasi bisa kita kembangkan lagi setelah halaman ini berhasil dipasang.</p>
-      <a class="button" href="#" onclick="alert('Fitur Konevo akan segera hadir!'); return false;">Mulai</a>
-    </section>
-  </main>
-  <footer>© 2026 Konevo</footer>
-</body>
-</html>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">K</div><div><h1>KONEVO</h1><p>Connect your circle</p></div></div><div class="avatar" aria-label="Profil">P</div></header>
+<section class="welcome"><div class="eyebrow">YOUR COMMUNITY, CONNECTED</div><h2>Terhubung lebih dekat.<br><span style="color:var(--blue)">Di mana pun.</span></h2><p>Ngobrol, temukan teman, dan masuk ke channel favoritmu.</p><div class="status"><i class="dot"></i> Tampilan demo · siap dikembangkan</div></section>
+<main>
+<section class="view active" id="home">
+<div class="grid"><article class="card radio-card"><div class="eyebrow">PUSH TO TALK</div><h3>Radio Konevo</h3><p class="sub">Tekan untuk masuk ke ruang komunikasi.</p><div class="radio-orb"><span>⌁</span></div><button class="primary" onclick="navigate('radio')">Buka Radio&nbsp; →</button></article>
+<article class="card"><div class="section-head"><div><h3>Teman online</h3><p class="sub">Orang-orang di lingkaranmu</p></div><button class="text-button" onclick="navigate('friends')">Lihat</button></div><div class="people"><div class="person"><div class="face">🧑🏻</div><b>Raka</b><small>● Online</small></div><div class="person"><div class="face">👩🏻</div><b>Naya</b><small>● Online</small></div><div class="person"><div class="face">🧔🏽</div><b>Dimas</b><small>● Online</small></div><div class="person"><div class="face">👩🏽</div><b>Sinta</b><small>● Online</small></div></div><p class="notice">Nama dan status di atas hanya contoh tampilan, belum berasal dari pengguna sungguhan.</p></article></div>
+<article class="card lower"><div class="section-head"><div><h3>Channel pilihan</h3><p class="sub">Pilih topik untuk mulai terhubung</p></div><button class="text-button" onclick="navigate('radio')">Semua</button></div><div class="channel"><div class="channel-icon">🎮</div><div class="channel-info"><b>Gaming Zone</b><small>Ngobrol soal game dan mabar</small></div><span class="pill">12 online</span></div><div class="channel"><div class="channel-icon">🎵</div><div class="channel-info"><b>Music Lounge</b><small>Musik, rekomendasi, dan obrolan santai</small></div><span class="pill">8 online</span></div><div class="channel"><div class="channel-icon">☕</div><div class="channel-info"><b>Ruang Santai</b><small>Tempat ngobrol bebas bareng teman</small></div><span class="pill">5 online</span></div></article>
+</section>
+<section class="view" id="radio"><div class="card radio-card"><div class="eyebrow">PUSH TO TALK</div><h3>Radio Konevo</h3><p class="sub">Antarmuka demo — komunikasi suara langsung belum tersambung ke server.</p><div class="radio-orb" style="width:110px;height:110px;margin:28px auto"><span>🎙</span></div><button class="primary" id="talkBtn" style="display:block;margin:auto" onpointerdown="talkStart(event)" onpointerup="talkEnd(event)" onpointerleave="talkEnd(event)" ontouchend="talkEnd(event)">Tekan & tahan untuk bicara</button><p id="radioStatus" class="notice" style="text-align:center">Belum terhubung ke channel</p></div><article class="card lower"><h3>Channel tersedia</h3><div class="channel"><div class="channel-icon">🎮</div><div class="channel-info"><b>Gaming Zone</b><small>Ruang obrolan komunitas game</small></div><button class="secondary" onclick="joinChannel('Gaming Zone')">Gabung</button></div><div class="channel"><div class="channel-icon">☕</div><div class="channel-info"><b>Ruang Santai</b><small>Ngobrol santai</small></div><button class="secondary" onclick="joinChannel('Ruang Santai')">Gabung</button></div></article></section>
+<section class="view" id="messages"><article class="card"><h3>Pesan</h3><p class="sub">Ruang chat demo</p><input id="chatInput" class="field" placeholder="Tulis pesan demo…" aria-label="Tulis pesan"><button class="primary" onclick="sendMessage()">Kirim pesan</button><div id="chatList"><div class="message">Selamat datang di Konevo!<small>Pesan contoh · sistem demo</small></div></div><p class="notice">Pesan di sini hanya tersimpan sementara di halaman ini. Belum dikirim ke pengguna lain.</p></article></section>
+<section class="view" id="friends"><article class="card"><div class="section-head"><div><h3>Teman</h3><p class="sub">Temukan lingkaranmu</p></div></div><input class="field" id="friendSearch" placeholder="Cari teman…" oninput="filterFriends()"><div id="friendList"><div class="channel friend-item"><div class="channel-icon">🧑🏻</div><div class="channel-info"><b>Raka</b><small>Online · contoh pengguna</small></div><button class="secondary" onclick="demoAction('Permintaan teman demo dikirim.')">Tambah</button></div><div class="channel friend-item"><div class="channel-icon">👩🏻</div><div class="channel-info"><b>Naya</b><small>Online · contoh pengguna</small></div><button class="secondary" onclick="demoAction('Permintaan teman demo dikirim.')">Tambah</button></div><div class="channel friend-item"><div class="channel-icon">🧔🏽</div><div class="channel-info"><b>Dimas</b><small>Offline · contoh pengguna</small></div><button class="secondary" onclick="demoAction('Permintaan teman demo dikirim.')">Tambah</button></div></div></article></section>
+<section class="view" id="profile"><article class="card"><div style="display:flex;align-items:center;gap:14px;margin-bottom:20px"><div class="logo" style="width:58px;height:58px;border-radius:19px">P</div><div><h3 style="margin-bottom:4px">Pandu</h3><p class="sub">Profil demo Konevo</p></div></div><div class="setting-row"><span>Notifikasi</span><span style="color:var(--green)">Aktif (demo)</span></div><div class="setting-row"><span>Tema</span><span>Dark Neon</span></div><div class="setting-row"><span>Privasi</span><span>Segera hadir</span></div><div class="setting-row"><span>Pengaturan audio</span><span>Segera hadir</span></div><p class="notice">Ini masih prototipe antarmuka. Login, akun, penyimpanan, chat real-time, dan push-to-talk sungguhan perlu backend dan autentikasi.</p></article></section>
+</main>
+</div>
+<nav class="nav" aria-label="Navigasi utama"><div class="nav-inner"><button class="active" data-view="home" onclick="navigate('home')"><span>⌂</span>Beranda</button><button data-view="radio" onclick="navigate('radio')"><span>⌁</span>Radio</button><button data-view="messages" onclick="navigate('messages')"><span>▤</span>Pesan</button><button data-view="friends" onclick="navigate('friends')"><span>♧</span>Teman</button><button data-view="profile" onclick="navigate('profile')"><span>◉</span>Profil</button></div></nav>
+<script>
+function navigate(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'})}
+function demoAction(message){alert(message+' Ini belum terhubung ke backend.')}
+function joinChannel(name){document.getElementById('radioStatus').textContent='Channel demo dipilih: '+name+'. Belum ada koneksi suara.';navigate('radio')}
+function talkStart(e){if(e)e.preventDefault();document.getElementById('radioStatus').textContent='Tombol ditekan — simulasi saja, audio belum dikirim.';document.getElementById('talkBtn').textContent='Sedang menahan…'}
+function talkEnd(e){if(e)e.preventDefault();const b=document.getElementById('talkBtn');if(b){b.textContent='Tekan & tahan untuk bicara';document.getElementById('radioStatus').textContent='Simulasi selesai. Push-to-talk sungguhan perlu backend audio.'}}
+function sendMessage(){const input=document.getElementById('chatInput');const value=input.value.trim();if(!value)return;const el=document.createElement('div');el.className='message';el.textContent=value;const small=document.createElement('small');small.textContent='Pesan lokal · demo';el.appendChild(small);document.getElementById('chatList').prepend(el);input.value=''}
+function filterFriends(){const q=document.getElementById('friendSearch').value.toLowerCase();document.querySelectorAll('.friend-item').forEach(el=>el.style.display=el.textContent.toLowerCase().includes(q)?'flex':'none')}
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage()});
+</script>
+</body></html>
